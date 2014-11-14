@@ -1,5 +1,10 @@
-Log Chat: true
-Log PM: true
-Log Shutdown: true
-Log Startup: true
-Log Location: "logs/chat/"
+Log:
+  Chat: true
+  PM: true
+  Shutdown: true
+  Startup: true
+  Player Join: false
+  Player Quit: false
+File:
+  Location: "logs/chat/"
+  File Per Day: true

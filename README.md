@@ -1,4 +1,4 @@
 SimpleChatLog
 =====================
 
-Creates a log file of the chat in logs/chat, will create a separate file per day
+Logs chat, commands, messages, and more!

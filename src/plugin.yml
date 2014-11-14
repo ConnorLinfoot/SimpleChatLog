@@ -1,7 +1,7 @@
 name: SimpleChatLog
 description: SimpleChatLog
 main: com.connorlinfoot.simplechatlog.SimpleChatLog
-version: 1.2
+version: 1.3
 commands:
   scl:
     description: SimpleChatLog

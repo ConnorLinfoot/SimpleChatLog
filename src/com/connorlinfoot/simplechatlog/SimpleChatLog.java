@@ -1,5 +1,11 @@
 package com.connorlinfoot.simplechatlog;
 
+import com.connorlinfoot.simplechatlog.API.SimpleChatAPI;
+import com.connorlinfoot.simplechatlog.Commands.SCLCommand;
+import com.connorlinfoot.simplechatlog.Listeners.Chat;
+import com.connorlinfoot.simplechatlog.Listeners.PM;
+import com.connorlinfoot.simplechatlog.Listeners.PlayerJoin;
+import com.connorlinfoot.simplechatlog.Listeners.PlayerQuit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -11,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,37 +30,25 @@ import java.util.Calendar;
 
 
 public class SimpleChatLog extends JavaPlugin implements Listener {
-    private String location = "logs/chat/";
-    private boolean logChat = true;
-    private boolean logPM = true;
-    private boolean logShutdown = true;
-    private boolean logStartup = true;
+    public static Plugin plugin;
+    public static String location = "logs/chat/";
+    public static boolean logChat = true;
+    public static boolean logPM = true;
+    public static boolean logShutdown = true;
+    public static boolean logStartup = true;
+    public static boolean logPlayerJoin = false;
+    public static boolean logPlayerQuit = false;
+    public static boolean filePerDay = true;
 
     public void onEnable() {
+        plugin = this;
         getConfig().options().copyDefaults(true);
         saveConfig();
         Server server = getServer();
         ConsoleCommandSender console = server.getConsoleSender();
 
-        if( getConfig().isSet("Log Location") ){
-            location = getConfig().getString("Log Location");
-        }
-
-        if( getConfig().isSet("Log Chat") ){
-            logChat = getConfig().getBoolean("Log Chat");
-        }
-
-        if( getConfig().isSet("Log PM") ){
-            logPM = getConfig().getBoolean("Log PM");
-        }
-
-        if( getConfig().isSet("Log Shutdown") ){
-            logShutdown = getConfig().getBoolean("Log Shutdown");
-        }
-
-        if( getConfig().isSet("Log Startup") ){
-            logStartup = getConfig().getBoolean("Log Startup");
-        }
+        checkOldConfig();
+        getSetConfig();
 
         console.sendMessage("");
         console.sendMessage(ChatColor.BLUE + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
@@ -64,109 +59,78 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
         console.sendMessage(ChatColor.BLUE + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         console.sendMessage("");
 
-        Bukkit.getPluginManager().registerEvents(this,this);
-        if( logStartup ) addLine("------ SERVER STARTED (or reloaded) ------");
+        Bukkit.getPluginManager().registerEvents(new Chat(),this);
+        Bukkit.getPluginManager().registerEvents(new PlayerJoin(),this);
+        Bukkit.getPluginManager().registerEvents(new PlayerQuit(),this);
+        Bukkit.getPluginManager().registerEvents(new PM(),this);
+        Bukkit.getPluginCommand("scl").setExecutor(new SCLCommand());
+        if( logStartup ) SimpleChatAPI.addLine("------ SERVER STARTED (or reloaded) ------");
     }
 
     public void onDisable() {
-        if( logShutdown ) addLine("------ SERVER SHUTDOWN ------");
+        if (logShutdown) SimpleChatAPI.addLine("------ SERVER SHUTDOWN ------");
         getLogger().info(getDescription().getName() + " has been disabled!");
     }
 
-    private void createFile(){
-        String fileName = currentDate() + ".txt";
-        File directory = new File(location);
-        if( !directory.exists() ){
-            directory.mkdirs();
+    private void getSetConfig(){
+        if( getConfig().isSet("File.Location") ){
+            location = getConfig().getString("File.Location");
         }
 
-        File file = new File(location + fileName);
-        if( !file.exists() ){
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private String currentDate() {
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(cal.getTime());
-    }
-
-    private String currentTime() {
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        return sdf.format(cal.getTime());
-    }
-
-    private void addLine(String text){
-        String fileName = currentDate() + ".txt";
-        File file = new File(location + fileName);
-        if( !file.exists() ){
-            createFile();
+        if( getConfig().isSet("Log.Chat") ){
+            logChat = getConfig().getBoolean("Log.Chat");
         }
 
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-            bw.write(text);
-            bw.newLine();
-            bw.close();
-        } catch (Exception ignored) {}
-    }
+        if( getConfig().isSet("Log.PM") ){
+            logPM = getConfig().getBoolean("Log.PM");
+        }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onChat(AsyncPlayerChatEvent event){
-        if( logChat ) {
-            Player player = event.getPlayer();
-            String message = event.getMessage();
-            String text = "[" + currentTime() + "] " + player.getDisplayName() + " (" + player.getName() + ") >> " + message;
-            addLine(text);
+        if( getConfig().isSet("Log.Shutdown") ){
+            logShutdown = getConfig().getBoolean("Log.Shutdown");
+        }
+
+        if( getConfig().isSet("Log.Startup") ){
+            logStartup = getConfig().getBoolean("Log.Startup");
+        }
+
+        if( getConfig().isSet("Log.Player Join") ){
+            logPlayerJoin = getConfig().getBoolean("Log.Player Join");
+        }
+
+        if( getConfig().isSet("Log.Player Quit") ){
+            logPlayerQuit = getConfig().getBoolean("Log.Player Quit");
+        }
+
+        if( getConfig().isSet("File.File Per Day") ){
+            filePerDay = getConfig().getBoolean("File.File Per Day");
         }
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if( args.length >= 1 && args[0].equalsIgnoreCase("reload") ){
-            if(!sender.hasPermission("simplechatlog.reload") ){
-                sender.sendMessage(ChatColor.RED + "Sorry, you do not have the correct permission to run this command");
-                return false;
-            }
-
-            if( getConfig().isSet("Log Location") ){
-                location = getConfig().getString("Log Location");
-            }
-
-            if( getConfig().isSet("Log Chat") ){
-                logChat = getConfig().getBoolean("Log Chat");
-            }
-
-            if( getConfig().isSet("Log PM") ){
-                logPM = getConfig().getBoolean("Log PM");
-            }
-
-            if( getConfig().isSet("Log Shutdown") ){
-                logShutdown = getConfig().getBoolean("Log Shutdown");
-            }
-
-            if( getConfig().isSet("Log Startup") ){
-                logStartup = getConfig().getBoolean("Log Startup");
-            }
-            sender.sendMessage(ChatColor.GREEN + "Config Reloaded");
-            String name;
-            if( sender instanceof Player ){
-                Player player = (Player) sender;
-                name = player.getName();
-            } else {
-                name = "Console";
-            }
-            addLine("------ Config Was Reloaded By " + name + " ------");
-            return true;
+    private void checkOldConfig(){
+        if( getConfig().isSet("Log Location") ){
+            getConfig().set("File.Location", getConfig().getString("Log Location"));
+            getConfig().set("Log Location", null);
         }
 
-        sender.sendMessage(ChatColor.AQUA + "\"" + getDescription().getName() + "\" - Version " + getDescription().getVersion() + " - Created By Connor Linfoot - " );
-        return false;
+        if( getConfig().isSet("Log Chat") ){
+            getConfig().set("Log.Chat", getConfig().getString("Log Chat"));
+            getConfig().set("Log Chat", null);
+        }
+
+        if( getConfig().isSet("Log PM") ){
+            getConfig().set("Log.PM", getConfig().getString("Log PM"));
+            getConfig().set("Log PM", null);
+        }
+
+        if( getConfig().isSet("Log Shutdown") ){
+            getConfig().set("Log.Shutdown", getConfig().getString("Log Shutdown"));
+            getConfig().set("Log Shutdown", null);
+        }
+
+        if( getConfig().isSet("Log Startup") ){
+            getConfig().set("Log.Startup", getConfig().getString("Log Startup"));
+            getConfig().set("Log Startup", null);
+        }
+        saveConfig();
     }
 }
