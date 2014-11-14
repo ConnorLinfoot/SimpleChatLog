@@ -1,0 +1,5 @@
+Log Chat: true
+Log PM: true
+Log Shutdown: true
+Log Startup: true
+Log Location: "logs/chat/"

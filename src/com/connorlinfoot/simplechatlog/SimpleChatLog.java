@@ -28,6 +28,10 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
         Server server = getServer();
         ConsoleCommandSender console = server.getConsoleSender();
 
+        if( getConfig().isSet("Log Location") ){
+            location = getConfig().getString("Log Location");
+        }
+
         console.sendMessage("");
         console.sendMessage(ChatColor.BLUE + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         console.sendMessage("");
@@ -38,9 +42,11 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
         console.sendMessage("");
 
         Bukkit.getPluginManager().registerEvents(this,this);
+        addLine("------ SERVER STARTED ------");
     }
 
     public void onDisable() {
+        addLine("------ SERVER SHUTDOWN ------");
         getLogger().info(getDescription().getName() + " has been disabled!");
     }
 
@@ -67,6 +73,12 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
         return sdf.format(cal.getTime());
     }
 
+    private String currentTime() {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        return sdf.format(cal.getTime());
+    }
+
     private void addLine(String text){
         String fileName = currentDate() + ".txt";
         File file = new File(location + fileName);
@@ -86,7 +98,7 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
     public void onChat(AsyncPlayerChatEvent event){
         Player player = event.getPlayer();
         String message = event.getMessage();
-        String text = player.getDisplayName() + " (" + player.getName() + ") - " + message;
+        String text = "[" + currentTime() + "] " + player.getDisplayName() + " (" + player.getName() + ") >> " + message;
         addLine(text);
     }
 }
