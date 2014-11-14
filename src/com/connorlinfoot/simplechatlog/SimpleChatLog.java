@@ -3,6 +3,8 @@ package com.connorlinfoot.simplechatlog;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,6 +39,22 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
             location = getConfig().getString("Log Location");
         }
 
+        if( getConfig().isSet("Log Chat") ){
+            logChat = getConfig().getBoolean("Log Chat");
+        }
+
+        if( getConfig().isSet("Log PM") ){
+            logPM = getConfig().getBoolean("Log PM");
+        }
+
+        if( getConfig().isSet("Log Shutdown") ){
+            logShutdown = getConfig().getBoolean("Log Shutdown");
+        }
+
+        if( getConfig().isSet("Log Startup") ){
+            logStartup = getConfig().getBoolean("Log Startup");
+        }
+
         console.sendMessage("");
         console.sendMessage(ChatColor.BLUE + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         console.sendMessage("");
@@ -47,7 +65,7 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
         console.sendMessage("");
 
         Bukkit.getPluginManager().registerEvents(this,this);
-        if( logStartup ) addLine("------ SERVER STARTED ------");
+        if( logStartup ) addLine("------ SERVER STARTED (or reloaded) ------");
     }
 
     public void onDisable() {
@@ -107,5 +125,48 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
             String text = "[" + currentTime() + "] " + player.getDisplayName() + " (" + player.getName() + ") >> " + message;
             addLine(text);
         }
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if( args.length >= 1 && args[0].equalsIgnoreCase("reload") ){
+            if(!sender.hasPermission("simplechatlog.reload") ){
+                sender.sendMessage(ChatColor.RED + "Sorry, you do not have the correct permission to run this command");
+                return false;
+            }
+
+            if( getConfig().isSet("Log Location") ){
+                location = getConfig().getString("Log Location");
+            }
+
+            if( getConfig().isSet("Log Chat") ){
+                logChat = getConfig().getBoolean("Log Chat");
+            }
+
+            if( getConfig().isSet("Log PM") ){
+                logPM = getConfig().getBoolean("Log PM");
+            }
+
+            if( getConfig().isSet("Log Shutdown") ){
+                logShutdown = getConfig().getBoolean("Log Shutdown");
+            }
+
+            if( getConfig().isSet("Log Startup") ){
+                logStartup = getConfig().getBoolean("Log Startup");
+            }
+            sender.sendMessage(ChatColor.GREEN + "Config Reloaded");
+            String name;
+            if( sender instanceof Player ){
+                Player player = (Player) sender;
+                name = player.getName();
+            } else {
+                name = "Console";
+            }
+            addLine("------ Config Was Reloaded By " + name + " ------");
+            return true;
+        }
+
+        sender.sendMessage(ChatColor.AQUA + "\"" + getDescription().getName() + "\" - Version " + getDescription().getVersion() + " - Created By Connor Linfoot - " );
+        return false;
     }
 }
