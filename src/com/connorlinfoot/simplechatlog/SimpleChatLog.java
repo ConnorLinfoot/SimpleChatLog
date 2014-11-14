@@ -6,6 +6,7 @@ import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
@@ -21,6 +22,10 @@ import java.util.Calendar;
 
 public class SimpleChatLog extends JavaPlugin implements Listener {
     private String location = "logs/chat/";
+    private boolean logChat = true;
+    private boolean logPM = true;
+    private boolean logShutdown = true;
+    private boolean logStartup = true;
 
     public void onEnable() {
         getConfig().options().copyDefaults(true);
@@ -42,11 +47,11 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
         console.sendMessage("");
 
         Bukkit.getPluginManager().registerEvents(this,this);
-        addLine("------ SERVER STARTED ------");
+        if( logStartup ) addLine("------ SERVER STARTED ------");
     }
 
     public void onDisable() {
-        addLine("------ SERVER SHUTDOWN ------");
+        if( logShutdown ) addLine("------ SERVER SHUTDOWN ------");
         getLogger().info(getDescription().getName() + " has been disabled!");
     }
 
@@ -94,11 +99,13 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
         } catch (Exception ignored) {}
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onChat(AsyncPlayerChatEvent event){
-        Player player = event.getPlayer();
-        String message = event.getMessage();
-        String text = "[" + currentTime() + "] " + player.getDisplayName() + " (" + player.getName() + ") >> " + message;
-        addLine(text);
+        if( logChat ) {
+            Player player = event.getPlayer();
+            String message = event.getMessage();
+            String text = "[" + currentTime() + "] " + player.getDisplayName() + " (" + player.getName() + ") >> " + message;
+            addLine(text);
+        }
     }
 }
