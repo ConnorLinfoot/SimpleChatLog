@@ -1,7 +1,7 @@
 name: SimpleChatLog
 description: SimpleChatLog is a plugin which will allow you to log specific items how you want them to be logged
 main: com.connorlinfoot.simplechatlog.SimpleChatLog
-version: 1.4-PRE-RELEASE
+version: 1.4
 commands:
   scl:
     description: SimpleChatLog

@@ -6,7 +6,7 @@
 
     <groupId>groupId</groupId>
     <artifactId>SimpleChatLog</artifactId>
-    <version>1.4-PRE-RELEASE</version>
+    <version>1.4</version>
 
     <repositories>
         <repository>
