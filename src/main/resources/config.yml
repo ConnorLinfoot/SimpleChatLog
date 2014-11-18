@@ -5,6 +5,7 @@ Log:
   Startup: true
   Player Join: false
   Player Quit: false
+  Commands: false
 File:
   Location: "logs/chat/"
   File Per Day: true

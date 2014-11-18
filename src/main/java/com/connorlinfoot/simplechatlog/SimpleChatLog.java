@@ -2,10 +2,7 @@ package com.connorlinfoot.simplechatlog;
 
 import com.connorlinfoot.simplechatlog.API.SimpleChatAPI;
 import com.connorlinfoot.simplechatlog.Commands.SCLCommand;
-import com.connorlinfoot.simplechatlog.Listeners.Chat;
-import com.connorlinfoot.simplechatlog.Listeners.PM;
-import com.connorlinfoot.simplechatlog.Listeners.PlayerJoin;
-import com.connorlinfoot.simplechatlog.Listeners.PlayerQuit;
+import com.connorlinfoot.simplechatlog.Listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -38,6 +35,7 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
     public static boolean logStartup = true;
     public static boolean logPlayerJoin = false;
     public static boolean logPlayerQuit = false;
+    public static boolean logCommands = false;
     public static boolean filePerDay = true;
 
     public void onEnable() {
@@ -63,6 +61,7 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new PlayerJoin(),this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuit(),this);
         Bukkit.getPluginManager().registerEvents(new PM(),this);
+        Bukkit.getPluginManager().registerEvents(new Commands(),this);
         Bukkit.getPluginCommand("scl").setExecutor(new SCLCommand());
         if( logStartup ) SimpleChatAPI.addLine("------ SERVER STARTED (or reloaded) ------");
     }
@@ -103,6 +102,10 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
 
         if( getConfig().isSet("File.File Per Day") ){
             filePerDay = getConfig().getBoolean("File.File Per Day");
+        }
+
+        if( getConfig().isSet("Log.Commands") ){
+            logCommands = getConfig().getBoolean("Log.Commands");
         }
     }
 
