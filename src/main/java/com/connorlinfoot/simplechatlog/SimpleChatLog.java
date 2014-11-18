@@ -26,40 +26,40 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
     public static boolean SNAPSHOT = false;
 
     public static void getSetConfig() {
-        if (getConfig().isSet("File.Location")) {
-            location = getConfig().getString("File.Location");
+        if (plugin.getConfig().isSet("File.Location")) {
+            location = plugin.getConfig().getString("File.Location");
         }
 
-        if (getConfig().isSet("Log.Chat")) {
-            logChat = getConfig().getBoolean("Log.Chat");
+        if (plugin.getConfig().isSet("Log.Chat")) {
+            logChat = plugin.getConfig().getBoolean("Log.Chat");
         }
 
-        if (getConfig().isSet("Log.PM")) {
-            logPM = getConfig().getBoolean("Log.PM");
+        if (plugin.getConfig().isSet("Log.PM")) {
+            logPM = plugin.getConfig().getBoolean("Log.PM");
         }
 
-        if (getConfig().isSet("Log.Shutdown")) {
-            logShutdown = getConfig().getBoolean("Log.Shutdown");
+        if (plugin.getConfig().isSet("Log.Shutdown")) {
+            logShutdown = plugin.getConfig().getBoolean("Log.Shutdown");
         }
 
-        if (getConfig().isSet("Log.Startup")) {
-            logStartup = getConfig().getBoolean("Log.Startup");
+        if (plugin.getConfig().isSet("Log.Startup")) {
+            logStartup = plugin.getConfig().getBoolean("Log.Startup");
         }
 
-        if (getConfig().isSet("Log.Player Join")) {
-            logPlayerJoin = getConfig().getBoolean("Log.Player Join");
+        if (plugin.getConfig().isSet("Log.Player Join")) {
+            logPlayerJoin = plugin.getConfig().getBoolean("Log.Player Join");
         }
 
-        if (getConfig().isSet("Log.Player Quit")) {
-            logPlayerQuit = getConfig().getBoolean("Log.Player Quit");
+        if (plugin.getConfig().isSet("Log.Player Quit")) {
+            logPlayerQuit = plugin.getConfig().getBoolean("Log.Player Quit");
         }
 
-        if (getConfig().isSet("File.File Per Day")) {
-            filePerDay = getConfig().getBoolean("File.File Per Day");
+        if (plugin.getConfig().isSet("File.File Per Day")) {
+            filePerDay = plugin.getConfig().getBoolean("File.File Per Day");
         }
 
-        if (getConfig().isSet("Log.Commands")) {
-            logCommands = getConfig().getBoolean("Log.Commands");
+        if (plugin.getConfig().isSet("Log.Commands")) {
+            logCommands = plugin.getConfig().getBoolean("Log.Commands");
         }
     }
 
