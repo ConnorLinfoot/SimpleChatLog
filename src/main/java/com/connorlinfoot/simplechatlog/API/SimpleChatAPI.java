@@ -13,7 +13,7 @@ import java.util.Calendar;
 public class SimpleChatAPI {
 
     private static void createFile(){
-        String fileName = currentDate() + ".txt";
+        String fileName = getTime() + ".txt";
         File directory = new File(SimpleChatLog.location);
         if( !directory.exists() ){
             directory.mkdirs();
@@ -29,13 +29,13 @@ public class SimpleChatAPI {
         }
     }
 
-    public static String currentDate() {
+    public static String getDate() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(cal.getTime());
     }
 
-    public static String currentTime() {
+    public static String getTime() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         return sdf.format(cal.getTime());
@@ -44,7 +44,7 @@ public class SimpleChatAPI {
     public static void addLine(String text){
         String fileName;
         if( SimpleChatLog.filePerDay ){
-            fileName = currentDate() + ".txt";
+            fileName = getDate() + ".txt";
         } else {
             fileName = "logs.txt";
         }
