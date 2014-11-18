@@ -8,3 +8,5 @@ Log:
 File:
   Location: "logs/chat/"
   File Per Day: true
+Format:
+  Chat: "[%time%] %displayname% (%playername%) >> %message%"

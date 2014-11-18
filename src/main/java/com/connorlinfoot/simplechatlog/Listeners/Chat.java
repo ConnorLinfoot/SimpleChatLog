@@ -15,11 +15,12 @@ public class Chat implements Listener {
         if( SimpleChatLog.logChat ) {
             Player player = event.getPlayer();
             String message = event.getMessage();
-            String prefix = "[" + SimpleChatAPI.currentTime() + "]";
-            if( !SimpleChatLog.filePerDay ){
-                prefix = "[" + SimpleChatAPI.currentDate() + " " + SimpleChatAPI.currentTime() + "]";
-            }
-            String text = prefix + " " + player.getDisplayName() + " (" + player.getName() + ") >> " + message;
+            String text = SimpleChatLog.plugin.getConfig().getString("Format.Chat");
+            text = text.replaceAll("%time%",SimpleChatAPI.currentTime());
+            text = text.replaceAll("%date%",SimpleChatAPI.currentDate());
+            text = text.replaceAll("%message%",message);
+            text = text.replaceAll("%playername%",player.getName());
+            text = text.replaceAll("%displayname%",player.getDisplayName());
             SimpleChatAPI.addLine(text);
         }
     }
