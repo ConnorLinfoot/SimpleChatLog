@@ -1,7 +1,6 @@
 package com.connorlinfoot.simplechatlog.API;
 
 import com.connorlinfoot.simplechatlog.SimpleChatLog;
-import org.bukkit.Bukkit;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -58,8 +57,6 @@ public class SimpleChatAPI {
         } else {
             fileName = "logs.txt";
         }
-
-        Bukkit.broadcastMessage(fileName);
 
         File file = new File(SimpleChatLog.location + fileName);
         if( !file.exists() ){
