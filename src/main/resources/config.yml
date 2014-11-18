@@ -11,3 +11,6 @@ File:
   File Per Day: true
 Format:
   Chat: "[%time%] %displayname% (%playername%) >> %message%"
+  Player Join: "%displayname% (%playername%) joined the server"
+  Player Quit: "%displayname% (%playername%) left the server"
+  Command: "[%time%] %playername%: %message%"

@@ -19,7 +19,12 @@ public class PlayerQuit implements Listener {
             if( !SimpleChatLog.filePerDay ){
                 prefix = "[" + SimpleChatAPI.currentDate() + " " + SimpleChatAPI.currentTime() + "]";
             }
-            String text = prefix + " " + player.getDisplayName() + " (" + player.getName() + ") Left The Server";
+
+            String text = SimpleChatLog.plugin.getConfig().getString("Format.Player Quit");
+            text = text.replaceAll("%time%",SimpleChatAPI.currentTime());
+            text = text.replaceAll("%date%",SimpleChatAPI.currentDate());
+            text = text.replaceAll("%playername%",player.getName());
+            text = text.replaceAll("%displayname%",player.getDisplayName());
             SimpleChatAPI.addLine(text);
         }
     }

@@ -18,7 +18,12 @@ public class PlayerJoin implements Listener {
             if( !SimpleChatLog.filePerDay ){
                 prefix = "[" + SimpleChatAPI.currentDate() + " " + SimpleChatAPI.currentTime() + "]";
             }
-            String text = prefix + " " + player.getDisplayName() + " (" + player.getName() + ") Joined The Server";
+
+            String text = SimpleChatLog.plugin.getConfig().getString("Format.Player Join");
+            text = text.replaceAll("%time%",SimpleChatAPI.currentTime());
+            text = text.replaceAll("%date%",SimpleChatAPI.currentDate());
+            text = text.replaceAll("%playername%",player.getName());
+            text = text.replaceAll("%displayname%",player.getDisplayName());
             SimpleChatAPI.addLine(text);
         }
     }
