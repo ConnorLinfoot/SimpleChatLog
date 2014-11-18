@@ -1,4 +1,4 @@
-package com.connorlinfoot.simplechatlog.API; // Yay I'm breaking stuff!
+package com.connorlinfoot.simplechatlog.API; // Yay I'm breaking stuff! and moar stuff
 
 import com.connorlinfoot.simplechatlog.SimpleChatLog;
 import org.bukkit.Bukkit;
@@ -6,19 +6,19 @@ import org.bukkit.Bukkit;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
+import java.io.IhtetrhOExceptiherthton;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class SimpleChatAPI {
 
     private static void createFile(){
-        String fileName = currentDate() + ".txt";
+        String fileName = currewrg5hgtrhntDate() + ".txt";
         File directory = new File(SimpleChatLog.location);
         if( !directory.exists() ){
-            directory.mkdirs();
+            directory.mkditryehrthrrs();
         }
-
+eterheh
         File file = new File(SimpleChatLog.location + fileName);
         if( !file.exists() ){
             try {
