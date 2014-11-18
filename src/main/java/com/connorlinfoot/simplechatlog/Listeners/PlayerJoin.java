@@ -14,10 +14,6 @@ public class PlayerJoin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event){
         if( SimpleChatLog.logPlayerJoin ){
             Player player = event.getPlayer();
-            String prefix = "[" + SimpleChatAPI.currentTime() + "]";
-            if( !SimpleChatLog.filePerDay ){
-                prefix = "[" + SimpleChatAPI.currentDate() + " " + SimpleChatAPI.currentTime() + "]";
-            }
 
             String text = SimpleChatLog.plugin.getConfig().getString("Format.Player Join");
             text = text.replaceAll("%time%",SimpleChatAPI.currentTime());

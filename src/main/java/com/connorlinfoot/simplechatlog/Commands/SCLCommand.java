@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 
 public class SCLCommand implements CommandExecutor {
 
-    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if( args.length >= 1 && args[0].equalsIgnoreCase("reload") ){
             if(!sender.hasPermission("simplechatlog.reload") ){
@@ -50,7 +49,7 @@ public class SCLCommand implements CommandExecutor {
             return true;
         }
 
-        sender.sendMessage(ChatColor.AQUA + "\"" + SimpleChatLog.plugin.getDescription().getName() + "\" - Version " + SimpleChatLog.plugin.getDescription().getVersion() + " - Created By Connor Linfoot - " );
+        sender.sendMessage(ChatColor.AQUA + "\"" + SimpleChatLog.plugin.getDescription().getName() + "\" - Version " + SimpleChatLog.plugin.getDescription().getVersion() + " - Created By Connor Linfoot");
         return false;
     }
 

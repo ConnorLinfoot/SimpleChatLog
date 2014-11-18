@@ -8,8 +8,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import java.util.regex.PatternSyntaxException;
-
 public class Commands implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -17,11 +15,6 @@ public class Commands implements Listener {
         if( !SimpleChatLog.logCommands ) return;
         Player player = event.getPlayer();
         String message = event.getMessage();
-
-        String prefix = "[" + SimpleChatAPI.currentTime() + "]";
-        if( !SimpleChatLog.filePerDay ){
-            prefix = "[" + SimpleChatAPI.currentDate() + " " + SimpleChatAPI.currentTime() + "]";
-        }
 
         String text = SimpleChatLog.plugin.getConfig().getString("Format.Command");
         text = text.replaceAll("%time%",SimpleChatAPI.currentTime());
