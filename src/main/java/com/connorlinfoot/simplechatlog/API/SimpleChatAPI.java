@@ -1,6 +1,7 @@
 package com.connorlinfoot.simplechatlog.API;
 
 import com.connorlinfoot.simplechatlog.SimpleChatLog;
+import org.bukkit.Bukkit;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,6 +31,8 @@ public class SimpleChatAPI {
 
     @Deprecated
     public static String currentDate() {
+        Bukkit.getLogger().warning("A plugin called the deprecated method \"currentDate()\"");
+        Bukkit.getLogger().warning("Don't worry though! It should have still worked!");
         return getDate();
     }
 
@@ -41,6 +44,8 @@ public class SimpleChatAPI {
 
     @Deprecated
     public static String currentTime() {
+        Bukkit.getLogger().warning("A plugin called the deprecated method \"currentTime()\"");
+        Bukkit.getLogger().warning("Don't worry though! It should have still worked!");
         return getTime();
     }
 
