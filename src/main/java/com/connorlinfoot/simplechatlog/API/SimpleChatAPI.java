@@ -13,7 +13,7 @@ import java.util.Calendar;
 public class SimpleChatAPI {
 
     private static void createFile(){
-        String fileName = getTime() + ".txt";
+        String fileName = getDate() + ".txt";
         File directory = new File(SimpleChatLog.location);
         if( !directory.exists() ){
             directory.mkdirs();
