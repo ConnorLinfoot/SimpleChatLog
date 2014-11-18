@@ -6,4 +6,4 @@ SimpleChatLog
 Logs chat, commands, messages, and more!
 
 
-Testing for Jenkins..
+Testing for Jenkins.
