@@ -29,10 +29,20 @@ public class SimpleChatAPI {
         }
     }
 
+    @Deprecated
+    public static String currentDate() {
+        return getDate();
+    }
+
     public static String getDate() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(cal.getTime());
+    }
+
+    @Deprecated
+    public static String currentTime() {
+        return getTime();
     }
 
     public static String getTime() {
