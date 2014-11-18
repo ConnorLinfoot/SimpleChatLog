@@ -17,25 +17,7 @@ public class SCLCommand implements CommandExecutor {
                 return false;
             }
 
-            if( SimpleChatLog.plugin.getConfig().isSet("File.Location") ){
-                SimpleChatLog.location = SimpleChatLog.plugin.getConfig().getString("File.Location");
-            }
-
-            if( SimpleChatLog.plugin.getConfig().isSet("Log.Chat") ){
-                SimpleChatLog.logChat = SimpleChatLog.plugin.getConfig().getBoolean("Log.Chat");
-            }
-
-            if( SimpleChatLog.plugin.getConfig().isSet("Log.PM") ){
-                SimpleChatLog.logPM = SimpleChatLog.plugin.getConfig().getBoolean("Log.PM");
-            }
-
-            if( SimpleChatLog.plugin.getConfig().isSet("Log.Shutdown") ){
-                SimpleChatLog.logShutdown = SimpleChatLog.plugin.getConfig().getBoolean("Log.Shutdown");
-            }
-
-            if( SimpleChatLog.plugin.getConfig().isSet("Log.Startup") ){
-                SimpleChatLog.logStartup = SimpleChatLog.plugin.getConfig().getBoolean("Log.Startup");
-            }
+            SimpleChatLog.getSetConfig();
 
             sender.sendMessage(ChatColor.GREEN + "Config Reloaded");
             String name;
@@ -49,7 +31,8 @@ public class SCLCommand implements CommandExecutor {
             return true;
         }
 
-        sender.sendMessage(ChatColor.AQUA + "\"" + SimpleChatLog.plugin.getDescription().getName() + "\" - Version " + SimpleChatLog.plugin.getDescription().getVersion() + " - Created By Connor Linfoot");
+        sender.sendMessage(ChatColor.AQUA + "\"" + SimpleChatLog.plugin.getDescription().getName() + "\" - Version: " + SimpleChatLog.plugin.getDescription().getVersion());
+        sender.sendMessage(ChatColor.AQUA + "Made by Connor Linfoot http://connorlinfoot.com");
         return false;
     }
 

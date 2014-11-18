@@ -6,24 +6,10 @@ import com.connorlinfoot.simplechatlog.Listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 
 public class SimpleChatLog extends JavaPlugin implements Listener {
@@ -38,6 +24,44 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
     public static boolean logCommands = false;
     public static boolean filePerDay = true;
     public static boolean SNAPSHOT = false;
+
+    public static void getSetConfig() {
+        if (getConfig().isSet("File.Location")) {
+            location = getConfig().getString("File.Location");
+        }
+
+        if (getConfig().isSet("Log.Chat")) {
+            logChat = getConfig().getBoolean("Log.Chat");
+        }
+
+        if (getConfig().isSet("Log.PM")) {
+            logPM = getConfig().getBoolean("Log.PM");
+        }
+
+        if (getConfig().isSet("Log.Shutdown")) {
+            logShutdown = getConfig().getBoolean("Log.Shutdown");
+        }
+
+        if (getConfig().isSet("Log.Startup")) {
+            logStartup = getConfig().getBoolean("Log.Startup");
+        }
+
+        if (getConfig().isSet("Log.Player Join")) {
+            logPlayerJoin = getConfig().getBoolean("Log.Player Join");
+        }
+
+        if (getConfig().isSet("Log.Player Quit")) {
+            logPlayerQuit = getConfig().getBoolean("Log.Player Quit");
+        }
+
+        if (getConfig().isSet("File.File Per Day")) {
+            filePerDay = getConfig().getBoolean("File.File Per Day");
+        }
+
+        if (getConfig().isSet("Log.Commands")) {
+            logCommands = getConfig().getBoolean("Log.Commands");
+        }
+    }
 
     public void onEnable() {
         plugin = this;
@@ -75,44 +99,6 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
     public void onDisable() {
         if (logShutdown) SimpleChatAPI.addLine("------ SERVER SHUTDOWN ------");
         getLogger().info(getDescription().getName() + " has been disabled!");
-    }
-
-    private void getSetConfig(){
-        if( getConfig().isSet("File.Location") ){
-            location = getConfig().getString("File.Location");
-        }
-
-        if( getConfig().isSet("Log.Chat") ){
-            logChat = getConfig().getBoolean("Log.Chat");
-        }
-
-        if( getConfig().isSet("Log.PM") ){
-            logPM = getConfig().getBoolean("Log.PM");
-        }
-
-        if( getConfig().isSet("Log.Shutdown") ){
-            logShutdown = getConfig().getBoolean("Log.Shutdown");
-        }
-
-        if( getConfig().isSet("Log.Startup") ){
-            logStartup = getConfig().getBoolean("Log.Startup");
-        }
-
-        if( getConfig().isSet("Log.Player Join") ){
-            logPlayerJoin = getConfig().getBoolean("Log.Player Join");
-        }
-
-        if( getConfig().isSet("Log.Player Quit") ){
-            logPlayerQuit = getConfig().getBoolean("Log.Player Quit");
-        }
-
-        if( getConfig().isSet("File.File Per Day") ){
-            filePerDay = getConfig().getBoolean("File.File Per Day");
-        }
-
-        if( getConfig().isSet("Log.Commands") ){
-            logCommands = getConfig().getBoolean("Log.Commands");
-        }
     }
 
     private void checkOldConfig(){
