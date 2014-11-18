@@ -37,6 +37,7 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
     public static boolean logPlayerQuit = false;
     public static boolean logCommands = false;
     public static boolean filePerDay = true;
+    public static boolean SNAPSHOT = false;
 
     public void onEnable() {
         plugin = this;
@@ -53,6 +54,11 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
         console.sendMessage("");
         console.sendMessage(ChatColor.AQUA + getDescription().getName());
         console.sendMessage(ChatColor.AQUA + "Version " + getDescription().getVersion());
+        if (getDescription().getVersion().contains("SNAPSHOT")) {
+            SNAPSHOT = true;
+            server.getLogger().warning(ChatColor.RED + "You are running a snapshot build of " + getDescription().getName() + " please report bugs!");
+            server.getLogger().warning(ChatColor.RED + "NO support will be given if running old snapshot build!");
+        }
         console.sendMessage("");
         console.sendMessage(ChatColor.BLUE + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         console.sendMessage("");
