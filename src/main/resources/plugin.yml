@@ -1,5 +1,5 @@
 name: SimpleChatLog
-description: SimpleChatLog
+description: SimpleChatLog - This is a message added in and hopefully built with Jenkins and Maven
 main: com.connorlinfoot.simplechatlog.SimpleChatLog
 version: 1.3
 commands:
