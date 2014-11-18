@@ -32,9 +32,9 @@ public class PM implements Listener {
                 message.toLowerCase().contains("/t") ||
                 message.toLowerCase().contains("/tell") ){
 
-            String prefix = "[" + SimpleChatAPI.currentTime() + "]";
+            String prefix = "[" + SimpleChatAPI.getTime() + "]";
             if( !SimpleChatLog.filePerDay ){
-                prefix = "[" + SimpleChatAPI.currentDate() + " " + SimpleChatAPI.currentTime() + "]";
+                prefix = "[" + SimpleChatAPI.getDate() + " " + SimpleChatAPI.currentTime() + "]";
             }
 
             String text = prefix + " " + player.getName() + " -> " + name + ": " + newMessage;

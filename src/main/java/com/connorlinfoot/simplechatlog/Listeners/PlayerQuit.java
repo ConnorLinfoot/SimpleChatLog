@@ -16,8 +16,8 @@ public class PlayerQuit implements Listener {
             Player player = event.getPlayer();
 
             String text = SimpleChatLog.plugin.getConfig().getString("Format.Player Quit");
-            text = text.replaceAll("%time%",SimpleChatAPI.currentTime());
-            text = text.replaceAll("%date%",SimpleChatAPI.currentDate());
+            text = text.replaceAll("%time%", SimpleChatAPI.getTime());
+            text = text.replaceAll("%date%", SimpleChatAPI.getDate());
             text = text.replaceAll("%playername%",player.getName());
             text = text.replaceAll("%displayname%",player.getDisplayName());
             SimpleChatAPI.addLine(text);

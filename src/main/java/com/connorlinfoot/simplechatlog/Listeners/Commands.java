@@ -17,8 +17,8 @@ public class Commands implements Listener {
         String message = event.getMessage();
 
         String text = SimpleChatLog.plugin.getConfig().getString("Format.Command");
-        text = text.replaceAll("%time%",SimpleChatAPI.currentTime());
-        text = text.replaceAll("%date%",SimpleChatAPI.currentDate());
+        text = text.replaceAll("%time%", SimpleChatAPI.getTime());
+        text = text.replaceAll("%date%", SimpleChatAPI.getDate());
         text = text.replaceAll("%message%",message);
         text = text.replaceAll("%playername%",player.getName());
         text = text.replaceAll("%displayname%",player.getDisplayName());
