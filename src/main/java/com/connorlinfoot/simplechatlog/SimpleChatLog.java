@@ -90,8 +90,8 @@ public class SimpleChatLog extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new Chat(),this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoin(),this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuit(),this);
+        Bukkit.getPluginManager().registerEvents(new Commands(), this);
         Bukkit.getPluginManager().registerEvents(new PM(),this);
-        Bukkit.getPluginManager().registerEvents(new Commands(),this);
         Bukkit.getPluginCommand("scl").setExecutor(new SCLCommand());
         if( logStartup ) SimpleChatAPI.addLine("------ SERVER STARTED (or reloaded) ------");
     }
