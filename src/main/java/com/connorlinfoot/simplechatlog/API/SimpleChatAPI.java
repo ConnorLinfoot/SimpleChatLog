@@ -1,4 +1,4 @@
-package com.connorlinfoot.simplechatlog.API;
+package com.connorlinfoot.simplechatlog.API; // Yay I'm breaking stuff!
 
 import com.connorlinfoot.simplechatlog.SimpleChatLog;
 import org.bukkit.Bukkit;
